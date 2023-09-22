@@ -3,7 +3,7 @@ title: "MUSA 508, Lab 4 - Spatial Machine Learning Pt. 1"
 author: "Harris, Fichman, and Steif - 2022/23"
 output: html_document
 ---
-
+insta
 ```{r setup, include=FALSE}
 
 # You can set some global options for knitting chunks
@@ -87,7 +87,7 @@ group_by(OFFENSE_CODE_GROUP) %>%
 
 See if you can alter the size of the image output. Search for adjusting figure height and width for a rmarkdown block
 
-```{r price_map}
+```{r price_map, fig.height=4, fig.width=4}
 # ggplot, reorder
 
 # Mapping data
@@ -212,7 +212,7 @@ st_drop_geometry(boston.sf) %>%
 
 Can we resize this somehow to make it look better?
 
-```{r crime_corr}
+```{r crime_corr, fig.width=8, fig.height=6}
 ## Crime cor
 boston.sf %>%
   st_drop_geometry() %>%
@@ -345,8 +345,8 @@ Better R-squared - does that mean it's a better model?
 reg1 <- lm(SalePrice ~ ., data = boston_sub_200k %>% 
                                  dplyr::select(SalePrice, LivingArea, Style, 
                                                GROSS_AREA, R_TOTAL_RM, NUM_FLOORS,
-                                               R_BDRMS, R_FULL_BTH, R_HALF_BTH, 
-                                               R_KITCH, R_AC, R_FPLACE))
+                                               R_BDRMS, R_FULL_BTH,
+                                               R_KITCH, R_AC, R_FPLACE, crime_nn2))
 
 summary(reg1)
 ```
@@ -381,6 +381,9 @@ Challenges:
 - Try to engineer a 'fixed effect' out of the other variables in an attempt to parameterize a variable that suggests a big or fancy house or levels of fanciness. How does this affect your model?
 
 ```{r}
+reg <- lm(SalePrice ~ ., data = boston_sub_200k %>%
+            dplyr::select(GROSS_AREA,R_BDRMS,R_AC,crime_nn2,NUM_FLOORS,SalePrice))
 
+summary(reg)
 
 ```
