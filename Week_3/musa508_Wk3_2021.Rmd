@@ -165,6 +165,19 @@ Find a way to map the inside and outside buffers nicely that distinguishes them 
 
 Consider how you might label objects in your map using
 
+
+```{r makemap}
+dissolved_towns <- st_make_valid(studyAreaTowns) %>% group_by(MUNI) %>% summarize()
+
+ggplot()+
+  geom_sf(data=studyAreaTowns,fill='transparent') +
+  geom_sf(data = buffersAndTowns %>% filter(Legend == 'Inside'), alpha=0.5, aes(fill = MUNI)) +
+  geom_sf(data = buffersAndTowns %>% filter(Legend == 'Outside'), alpha=1, aes(fill = MUNI)) +
+  geom_sf_text(data = dissolved_towns, aes(label = MUNI), size = 2,position='jitter') +
+  mapTheme()
+```
+
+
 `geom_sf_text(data = studyAreaTowns, aes(label = MUNI), size = 3)`
 
 Think about ways to manipulate the `studyAreaTowns` data inside that text geom to make it more legible.

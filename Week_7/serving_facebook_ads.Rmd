@@ -1,7 +1,7 @@
 ---
 title: "People Based ML - Serving Facebook Ads"
 author: "Michael Fichman, Matt Harris & Ken Steif"
-date: "September 18,2022"
+date: "October 13,2023"
 output:
   html_document:
     toc: true
@@ -74,7 +74,7 @@ palette4 <- c("#981FAC","#FF006A","#FE4C35","#FE9900")
 palette2 <- c("#981FAC","#FF006A")
 
 
-advertising <- read.csv(file.path("Week_7","advertising_clean.csv"))
+advertising <- read.csv("https://raw.githubusercontent.com/mafichman/musa_5080_2023/main/Week_7/advertising_clean.csv")
 
 ```
 
@@ -190,8 +190,7 @@ Observe the output of the first model, and **using the code chunk below play aro
 
 ```{r second_model}
 advertisingModel <- glm(clickNumeric ~ .,
-                  data=advertisingTrain %>% dplyr::select(-Country, -Timestamp, -click, -userTimeFrame,
-                                                          -Fashion_FB_Group),
+                  data=advertisingTrain %>% dplyr::select(-Country, -Timestamp, -click, -userTimeFrame, -Male, -Time_On_FB),
                   family="binomial" (link="logit"))
 
 summary(advertisingModel)
